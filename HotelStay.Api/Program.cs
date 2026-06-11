@@ -22,14 +22,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 app.MapHotelStayEndpoints();
 
-using (var scope = app.Services.CreateScope())
+try
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
-    await dbContext.Database.EnsureCreatedAsync();
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+        await dbContext.Database.EnsureCreatedAsync();
+    }
+}
+catch (Exception ex)
+{
+    // Prevents the entire application from crashing if the database isn't ready yet
+    Console.WriteLine($"Database initialization failed: {ex.Message}");
 }
 
 app.Run();
