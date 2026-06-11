@@ -9,14 +9,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = ConnectionStringResolver.Resolve(configuration);
-
         services.AddDbContext<HotelDbContext>(options =>
         {
-            options.UseNpgsql(connectionString, npgsqlOptions =>
-            {
-                npgsqlOptions.MigrationsAssembly(typeof(HotelDbContext).Assembly.FullName);
-            });
+            options.UseInMemoryDatabase("HotelStayDb");
         });
 
         services.AddScoped<IBookingRepository, BookingRepository>();

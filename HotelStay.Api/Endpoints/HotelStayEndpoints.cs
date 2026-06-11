@@ -46,7 +46,7 @@ public static class HotelStayEndpoints
     }
 
     private static async Task<IResult> SearchHotelsAsync(
-        SearchHotelsQuery query,
+        [AsParameters] SearchHotelsQuery query,
         IValidator<SearchHotelsQuery> validator,
         IHotelSearchService hotelSearchService,
         CancellationToken cancellationToken)
