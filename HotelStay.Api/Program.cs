@@ -16,12 +16,22 @@ builder.Services.AddValidation();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelStay API V1");
+    c.RoutePrefix = "swagger"; // Keeps it at /swagger
+});
+
+// Ensure the redirect points to /swagger/index.html to prevent a 404 on the base redirect
+app.MapGet("/", () => Results.Redirect("/swagger/index.html"));
+app.MapHotelStayEndpoints();
 //app.UseHttpsRedirection();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 app.MapHotelStayEndpoints();
