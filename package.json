@@ -1,0 +1,13 @@
+{
+  "name": "hotelstay-booking-platform",
+  "version": "1.0.0",
+  "description": "HotelStay Booking Platform Root Workspace",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix hotelstay-ui",
+    "start": "concurrently --kill-others \"dotnet run --project HotelStay.Api --launch-profile https\" \"npm start --prefix hotelstay-ui\"",
+    "dev": "npm run install:all && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
