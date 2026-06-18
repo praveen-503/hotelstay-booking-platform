@@ -8,8 +8,6 @@ public sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
 {
     public void Configure(EntityTypeBuilder<Booking> builder)
     {
-        builder.ToTable("bookings");
-
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Reference)
@@ -46,9 +44,6 @@ public sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.Property(x => x.CancellationPolicy)
             .HasMaxLength(250)
             .IsRequired(false);
-
-        builder.Property(x => x.TotalPrice)
-            .HasPrecision(18, 2);
 
         builder.Property(x => x.Status)
             .HasMaxLength(32)

@@ -3,7 +3,6 @@ using HotelStay.Api.InfrastructureProviders;
 using HotelStay.Api.Persistence;
 using HotelStay.Api.Services;
 using HotelStay.Api.Validators;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,38 +15,22 @@ builder.Services.AddValidation();
 
 var app = builder.Build();
 
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelStay API V1");
-    c.RoutePrefix = "swagger"; // Keeps it at /swagger
+    c.RoutePrefix = "swagger";
 });
 
-// Ensure the redirect points to /swagger/index.html to prevent a 404 on the base redirect
-app.MapGet("/", () => Results.Redirect("/swagger/index.html"));
-app.MapHotelStayEndpoints();
-//app.UseHttpsRedirection();
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapGet("/", () => Results.Redirect("/swagger/index.html"))
+    .ExcludeFromDescription();
 app.MapHotelStayEndpoints();
 
-try
+using (var scope = app.Services.CreateScope())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
-        await dbContext.Database.EnsureCreatedAsync();
-    }
-}
-catch (Exception ex)
-{
-    // Prevents the entire application from crashing if the database isn't ready yet
-    Console.WriteLine($"Database initialization failed: {ex.Message}");
+    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+    await SeedData.EnsureSeededAsync(dbContext);
 }
 
 app.Run();

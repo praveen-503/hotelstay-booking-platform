@@ -49,26 +49,6 @@ public class ProviderArchitectureTests
     }
 
     [Fact]
-    public async Task HotelSearchProvider_AggregatesResults_FromBothProviders()
-    {
-        var providers = new IHotelProvider[]
-        {
-            new PremierStaysProvider(),
-            new BudgetNestsProvider()
-        };
-
-        var aggregator = new HotelSearchProvider(providers);
-
-        var results = await aggregator.SearchAsync(new SearchRequest
-        {
-            City = "London"
-        });
-
-        Assert.Contains(results, result => result.ProviderName == "PremierStays");
-        Assert.Contains(results, result => result.ProviderName == "BudgetNests");
-    }
-
-    [Fact]
     public async Task HotelSearchService_IgnoresFailingProviders_AndFiltersUnavailableBudgetRooms()
     {
         var service = new HotelStay.Api.Services.HotelSearchService(

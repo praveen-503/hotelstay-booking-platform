@@ -1,6 +1,7 @@
 using FluentValidation;
 using HotelStay.Api.ApplicationInterfaces;
 using HotelStay.Api.Models;
+using HotelStay.Api.Validators;
 using Microsoft.AspNetCore.Http;
 
 namespace HotelStay.Api.Endpoints;
@@ -9,40 +10,28 @@ public static class HotelStayEndpoints
 {
     public static IEndpointRouteBuilder MapHotelStayEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        var api = endpoints.MapGroup("/api/v1");
+        var hotels = endpoints.MapGroup("/hotels");
 
-        api.MapSearchEndpoints();
-        api.MapBookingEndpoints();
-
-        return endpoints;
-    }
-
-    private static RouteGroupBuilder MapSearchEndpoints(this RouteGroupBuilder group)
-    {
-        group.MapGet("/hotels/search", SearchHotelsAsync)
+        hotels.MapGet("/search", SearchHotelsAsync)
             .WithName("SearchHotels")
             .Produces<IReadOnlyList<HotelResult>>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status400BadRequest)
+            .ProducesValidationProblem()
             .WithTags("Hotels");
 
-        return group;
-    }
-
-    private static RouteGroupBuilder MapBookingEndpoints(this RouteGroupBuilder group)
-    {
-        group.MapPost("/book", CreateBookingAsync)
+        hotels.MapPost("/book", CreateBookingAsync)
             .WithName("CreateBooking")
             .Produces<BookingResponse>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status400BadRequest)
+            .ProducesValidationProblem()
+            .Produces(StatusCodes.Status422UnprocessableEntity)
             .WithTags("Bookings");
 
-        group.MapGet("/booking/{reference}", GetBookingAsync)
+        hotels.MapGet("/booking/{reference}", GetBookingAsync)
             .WithName("GetBookingByReference")
             .Produces<BookingResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags("Bookings");
 
-        return group;
+        return endpoints;
     }
 
     private static async Task<IResult> SearchHotelsAsync(
