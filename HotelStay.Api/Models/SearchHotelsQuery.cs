@@ -7,4 +7,6 @@ public sealed record SearchHotelsQuery
     public DateOnly? CheckIn { get; init; }
 
     public DateOnly? CheckOut { get; init; }
+
+    public string? RoomType { get; init; }
 }

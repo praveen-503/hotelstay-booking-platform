@@ -1,7 +1,7 @@
 using FluentValidation;
 using HotelStay.Api.ApplicationInterfaces;
+using HotelStay.Api.Enums;
 using HotelStay.Api.Models;
-using HotelStay.Api.Validators;
 using Microsoft.AspNetCore.Http;
 
 namespace HotelStay.Api.Endpoints;
@@ -10,28 +10,40 @@ public static class HotelStayEndpoints
 {
     public static IEndpointRouteBuilder MapHotelStayEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        var hotels = endpoints.MapGroup("/hotels");
+        var api = endpoints.MapGroup("/api/v1");
 
-        hotels.MapGet("/search", SearchHotelsAsync)
+        api.MapSearchEndpoints();
+        api.MapBookingEndpoints();
+
+        return endpoints;
+    }
+
+    private static RouteGroupBuilder MapSearchEndpoints(this RouteGroupBuilder group)
+    {
+        group.MapGet("/hotels/search", SearchHotelsAsync)
             .WithName("SearchHotels")
             .Produces<IReadOnlyList<HotelResult>>(StatusCodes.Status200OK)
-            .ProducesValidationProblem()
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags("Hotels");
 
-        hotels.MapPost("/book", CreateBookingAsync)
+        return group;
+    }
+
+    private static RouteGroupBuilder MapBookingEndpoints(this RouteGroupBuilder group)
+    {
+        group.MapPost("/hotels/book", CreateBookingAsync)
             .WithName("CreateBooking")
             .Produces<BookingResponse>(StatusCodes.Status200OK)
-            .ProducesValidationProblem()
-            .Produces(StatusCodes.Status422UnprocessableEntity)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags("Bookings");
 
-        hotels.MapGet("/booking/{reference}", GetBookingAsync)
+        group.MapGet("/hotels/booking/{reference}", GetBookingAsync)
             .WithName("GetBookingByReference")
             .Produces<BookingResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags("Bookings");
 
-        return endpoints;
+        return group;
     }
 
     private static async Task<IResult> SearchHotelsAsync(
@@ -47,11 +59,18 @@ public static class HotelStayEndpoints
             return TypedResults.ValidationProblem(validationResult.ToDictionary());
         }
 
+        RoomType? preferredRoomType = null;
+        if (!string.IsNullOrWhiteSpace(query.RoomType) && Enum.TryParse<RoomType>(query.RoomType, ignoreCase: true, out var parsedRoomType))
+        {
+            preferredRoomType = parsedRoomType;
+        }
+
         var request = new SearchRequest
         {
             City = query.Destination!,
             CheckInDate = query.CheckIn!.Value,
-            CheckOutDate = query.CheckOut!.Value
+            CheckOutDate = query.CheckOut!.Value,
+            PreferredRoomType = preferredRoomType
         };
 
         var results = await hotelSearchService.SearchAsync(request, cancellationToken);

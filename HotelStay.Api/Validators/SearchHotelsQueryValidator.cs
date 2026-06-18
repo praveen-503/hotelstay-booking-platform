@@ -1,4 +1,5 @@
 using FluentValidation;
+using HotelStay.Api.Enums;
 using HotelStay.Api.Models;
 
 namespace HotelStay.Api.Validators;
@@ -27,5 +28,9 @@ public sealed class SearchHotelsQueryValidator : AbstractValidator<SearchHotelsQ
         RuleFor(x => x)
             .Must(query => query.CheckIn.HasValue && query.CheckOut.HasValue && query.CheckOut.Value > query.CheckIn.Value)
             .WithMessage("checkOut must be after checkIn.");
+
+        RuleFor(x => x.RoomType)
+            .Must(type => string.IsNullOrEmpty(type) || Enum.TryParse<RoomType>(type, ignoreCase: true, out _))
+            .WithMessage("roomType is invalid. Allowed values: Standard, Deluxe, Suite.");
     }
 }

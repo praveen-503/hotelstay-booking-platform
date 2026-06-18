@@ -12,8 +12,19 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructureProviders();
 builder.Services.AddApplicationServices();
 builder.Services.AddValidation();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
+
+app.UseCors();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

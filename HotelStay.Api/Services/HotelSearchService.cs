@@ -30,6 +30,7 @@ public sealed class HotelSearchService : IHotelSearchService
             .SelectMany(result => result)
             .Where(result => !string.Equals(result.ProviderName, "BudgetNests", StringComparison.OrdinalIgnoreCase) || result.IsAvailable)
             .Select(NormalizeResult)
+            .Where(result => request.PreferredRoomType == null || result.RoomType == request.PreferredRoomType)
             .Select(ApplyTotalPrice(request))
             .OrderBy(result => result.ProviderName)
             .ThenBy(result => result.HotelName)

@@ -35,6 +35,62 @@ public sealed class PremierStaysProvider : IHotelProvider
             Amenities = new[] { "Breakfast", "Gym", "Airport Shuttle" },
             CancellationPolicy = "Free cancellation up to 48 hours before check-in.",
             AvailableRooms = 8
+        },
+        new PremierStaysHotelListing
+        {
+            HotelId = Guid.Parse("11111111-aaaa-bbbb-cccc-dddddddddddd"),
+            HotelName = "PremierStays Banjara Hills",
+            City = "Hyderabad",
+            Country = "India",
+            RoomType = "Suite",
+            NightlyRate = 15000.00m,
+            Available = true,
+            StarRating = 5,
+            Amenities = new[] { "Luxury Spa", "Outdoor Pool", "Fine Dining" },
+            CancellationPolicy = "Free cancellation up to 24 hours before check-in.",
+            AvailableRooms = 3
+        },
+        new PremierStaysHotelListing
+        {
+            HotelId = Guid.Parse("22222222-aaaa-bbbb-cccc-dddddddddddd"),
+            HotelName = "PremierStays Silicon Valley",
+            City = "Bangalore",
+            Country = "India",
+            RoomType = "Deluxe",
+            NightlyRate = 12000.00m,
+            Available = true,
+            StarRating = 4,
+            Amenities = new[] { "High-speed WiFi", "Fitness Center", "Business Lounge" },
+            CancellationPolicy = "Free cancellation up to 24 hours before check-in.",
+            AvailableRooms = 5
+        },
+        new PremierStaysHotelListing
+        {
+            HotelId = Guid.Parse("33333333-aaaa-bbbb-cccc-dddddddddddd"),
+            HotelName = "PremierStays Champs-Élysées",
+            City = "Paris",
+            Country = "France",
+            RoomType = "Suite",
+            NightlyRate = 450.00m,
+            Available = true,
+            StarRating = 5,
+            Amenities = new[] { "Eiffel Tower View", "Butler Service", "Gourmet Breakfast" },
+            CancellationPolicy = "Free cancellation up to 48 hours before check-in.",
+            AvailableRooms = 2
+        },
+        new PremierStaysHotelListing
+        {
+            HotelId = Guid.Parse("44444444-aaaa-bbbb-cccc-dddddddddddd"),
+            HotelName = "PremierStays Marina",
+            City = "Dubai",
+            Country = "UAE",
+            RoomType = "Deluxe",
+            NightlyRate = 550.00m,
+            Available = true,
+            StarRating = 5,
+            Amenities = new[] { "Infinity Pool", "Private Beach", "Helipad" },
+            CancellationPolicy = "Non-refundable.",
+            AvailableRooms = 6
         }
     };
 

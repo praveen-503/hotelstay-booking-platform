@@ -40,6 +40,50 @@ public sealed class BudgetNestsProvider : IHotelProvider
             nightly_rate = 148.00m,
             available = true,
             available_rooms = 5
+        },
+        new budget_nests_hotel_listing
+        {
+            hotel_id = Guid.Parse("55555555-cccc-dddd-eeee-ffffffffffff"),
+            hotel_name = "BudgetNests Gachibowli",
+            city = "Hyderabad",
+            country = "India",
+            room_type = "Standard",
+            nightly_rate = 3500.00m,
+            available = true,
+            available_rooms = 10
+        },
+        new budget_nests_hotel_listing
+        {
+            hotel_id = Guid.Parse("66666666-cccc-dddd-eeee-ffffffffffff"),
+            hotel_name = "BudgetNests Whitefield",
+            city = "Bangalore",
+            country = "India",
+            room_type = "Standard",
+            nightly_rate = 3000.00m,
+            available = true,
+            available_rooms = 8
+        },
+        new budget_nests_hotel_listing
+        {
+            hotel_id = Guid.Parse("77777777-cccc-dddd-eeee-ffffffffffff"),
+            hotel_name = "BudgetNests Montmartre",
+            city = "Paris",
+            country = "France",
+            room_type = "Standard",
+            nightly_rate = 95.00m,
+            available = true,
+            available_rooms = 4
+        },
+        new budget_nests_hotel_listing
+        {
+            hotel_id = Guid.Parse("88888888-cccc-dddd-eeee-ffffffffffff"),
+            hotel_name = "BudgetNests Deira",
+            city = "Dubai",
+            country = "UAE",
+            room_type = "Standard",
+            nightly_rate = 110.00m,
+            available = true,
+            available_rooms = 7
         }
     };
 
