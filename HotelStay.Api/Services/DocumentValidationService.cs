@@ -15,7 +15,9 @@ public sealed class DocumentValidationService : IDocumentValidationService
     {
         "London",
         "Paris",
-        "Dubai"
+        "Dubai",
+        "Manchester",
+        "Leeds"
     };
 
     public Task<DocumentValidationResult> ValidateAsync(string destination, DocumentType documentType, CancellationToken cancellationToken = default)

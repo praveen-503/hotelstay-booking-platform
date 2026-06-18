@@ -44,12 +44,67 @@ public static class SeedData
             new Hotel
             {
                 Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
-                Name = "HotelStay Bayfront",
-                City = "Barcelona",
-                Country = "Spain",
-                AddressLine1 = "25 Marina Promenade",
-                AddressLine2 = "Suite 4",
-                AverageNightlyRate = 240.00m,
+                Name = "HotelStay Banjara",
+                City = "Hyderabad",
+                Country = "India",
+                AddressLine1 = "Road No 1, Banjara Hills",
+                AddressLine2 = null,
+                AverageNightlyRate = 80.00m,
+                IsActive = true
+            },
+            new Hotel
+            {
+                Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                Name = "HotelStay Silicon",
+                City = "Bangalore",
+                Country = "India",
+                AddressLine1 = "100 Feet Road, Whitefield",
+                AddressLine2 = null,
+                AverageNightlyRate = 90.00m,
+                IsActive = true
+            },
+            new Hotel
+            {
+                Id = Guid.Parse("44444444-4444-4444-4444-444444444444"),
+                Name = "HotelStay Montmartre",
+                City = "Paris",
+                Country = "France",
+                AddressLine1 = "18 Rue de Steinkerque",
+                AddressLine2 = null,
+                AverageNightlyRate = 150.00m,
+                IsActive = true
+            },
+            new Hotel
+            {
+                Id = Guid.Parse("55555555-5555-5555-5555-555555555555"),
+                Name = "HotelStay Marina",
+                City = "Dubai",
+                Country = "UAE",
+                AddressLine1 = "Marina Heights, Tower A",
+                AddressLine2 = null,
+                AverageNightlyRate = 220.00m,
+                IsActive = true
+            },
+            new Hotel
+            {
+                Id = Guid.Parse("66666666-6666-6666-6666-666666666666"),
+                Name = "HotelStay Piccadilly",
+                City = "Manchester",
+                Country = "United Kingdom",
+                AddressLine1 = "Piccadilly Plaza",
+                AddressLine2 = null,
+                AverageNightlyRate = 120.00m,
+                IsActive = true
+            },
+            new Hotel
+            {
+                Id = Guid.Parse("77777777-7777-7777-7777-777777777777"),
+                Name = "HotelStay Riverside",
+                City = "Leeds",
+                Country = "United Kingdom",
+                AddressLine1 = "Neville Street",
+                AddressLine2 = null,
+                AverageNightlyRate = 95.00m,
                 IsActive = true
             }
         };
@@ -59,31 +114,92 @@ public static class SeedData
     {
         return new[]
         {
+            // London Rooms
             new Room
             {
-                Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                Id = Guid.Parse("11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                 HotelId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
-                RoomNumber = "1001",
+                RoomNumber = "101",
                 RoomType = RoomType.Standard,
-                NightlyRate = 175.00m,
+                NightlyRate = 150.00m,
                 IsAvailable = true
             },
             new Room
             {
-                Id = Guid.Parse("44444444-4444-4444-4444-444444444444"),
+                Id = Guid.Parse("11111111-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                 HotelId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
-                RoomNumber = "1002",
+                RoomNumber = "102",
                 RoomType = RoomType.Deluxe,
-                NightlyRate = 205.00m,
+                NightlyRate = 220.00m,
+                IsAvailable = true
+            },
+            // Hyderabad Rooms
+            new Room
+            {
+                Id = Guid.Parse("22222222-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                HotelId = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                RoomNumber = "201",
+                RoomType = RoomType.Standard,
+                NightlyRate = 60.00m,
                 IsAvailable = true
             },
             new Room
             {
-                Id = Guid.Parse("55555555-5555-5555-5555-555555555555"),
+                Id = Guid.Parse("22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                 HotelId = Guid.Parse("22222222-2222-2222-2222-222222222222"),
-                RoomNumber = "2001",
+                RoomNumber = "202",
+                RoomType = RoomType.Suite,
+                NightlyRate = 150.00m,
+                IsAvailable = true
+            },
+            // Bangalore Rooms
+            new Room
+            {
+                Id = Guid.Parse("33333333-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                HotelId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                RoomNumber = "301",
+                RoomType = RoomType.Deluxe,
+                NightlyRate = 95.00m,
+                IsAvailable = true
+            },
+            // Paris Rooms
+            new Room
+            {
+                Id = Guid.Parse("44444444-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                HotelId = Guid.Parse("44444444-4444-4444-4444-444444444444"),
+                RoomNumber = "401",
+                RoomType = RoomType.Standard,
+                NightlyRate = 110.00m,
+                IsAvailable = true
+            },
+            // Dubai Rooms
+            new Room
+            {
+                Id = Guid.Parse("55555555-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                HotelId = Guid.Parse("55555555-5555-5555-5555-555555555555"),
+                RoomNumber = "501",
                 RoomType = RoomType.Suite,
                 NightlyRate = 320.00m,
+                IsAvailable = true
+            },
+            // Manchester Rooms
+            new Room
+            {
+                Id = Guid.Parse("66666666-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                HotelId = Guid.Parse("66666666-6666-6666-6666-666666666666"),
+                RoomNumber = "601",
+                RoomType = RoomType.Deluxe,
+                NightlyRate = 135.00m,
+                IsAvailable = true
+            },
+            // Leeds Rooms
+            new Room
+            {
+                Id = Guid.Parse("77777777-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                HotelId = Guid.Parse("77777777-7777-7777-7777-777777777777"),
+                RoomNumber = "701",
+                RoomType = RoomType.Standard,
+                NightlyRate = 85.00m,
                 IsAvailable = true
             }
         };

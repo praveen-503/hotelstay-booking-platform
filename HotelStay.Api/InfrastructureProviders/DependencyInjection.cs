@@ -8,6 +8,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IHotelProvider, PremierStaysProvider>();
         services.AddScoped<IHotelProvider, BudgetNestsProvider>();
+        services.AddScoped<IHotelProvider, BoutiqueCollectionProvider>();
         services.AddScoped<IBookingProvider, BookingProvider>();
 
         return services;
