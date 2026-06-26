@@ -22,7 +22,15 @@ public sealed class DocumentValidationService : IDocumentValidationService
 
     public Task<DocumentValidationResult> ValidateAsync(string destination, DocumentType documentType, CancellationToken cancellationToken = default)
     {
-        if (InternationalCities.Contains(destination) && documentType != DocumentType.Passport)
+        var isDomestic = DomesticCities.Contains(destination);
+        var isInternational = InternationalCities.Contains(destination);
+
+        if (!isDomestic && !isInternational)
+        {
+            return Task.FromResult(DocumentValidationResult.Invalid("Unknown destination city."));
+        }
+
+        if (isInternational && documentType != DocumentType.Passport)
         {
             return Task.FromResult(DocumentValidationResult.Invalid("Passport required for international destinations"));
         }

@@ -51,5 +51,28 @@ public sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.Property(x => x.CreatedAt)
             .IsRequired();
+
+        builder.Property(x => x.CheckInDate)
+            .IsRequired();
+
+        builder.Property(x => x.CheckOutDate)
+            .IsRequired();
+
+        builder.Property(x => x.HotelId)
+            .IsRequired();
+
+        builder.Property(x => x.HotelName)
+            .HasMaxLength(200)
+            .IsRequired();
+
+        builder.Property(x => x.Adults)
+            .IsRequired();
+
+        builder.Property(x => x.Rooms)
+            .IsRequired();
+
+        builder.Property(x => x.Currency)
+            .HasMaxLength(10)
+            .IsRequired();
     }
 }

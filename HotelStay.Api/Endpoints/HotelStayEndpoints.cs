@@ -1,6 +1,7 @@
 using FluentValidation;
 using HotelStay.Api.ApplicationInterfaces;
 using HotelStay.Api.Enums;
+using HotelStay.Api.InfrastructureProviders;
 using HotelStay.Api.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -14,6 +15,12 @@ public static class HotelStayEndpoints
 
         api.MapSearchEndpoints();
         api.MapBookingEndpoints();
+        
+        api.MapGet("/hotels/{hotelId:guid}", GetHotelByIdAsync)
+            .WithName("GetHotelById")
+            .Produces<HotelResult>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithTags("Hotels");
 
         return endpoints;
     }
@@ -107,5 +114,23 @@ public static class HotelStayEndpoints
     {
         var booking = await bookingService.GetBookingByReferenceAsync(reference, cancellationToken);
         return booking is null ? TypedResults.NotFound() : TypedResults.Ok(booking);
+    }
+
+    public static async Task<IResult> GetHotelByIdAsync(
+        Guid hotelId,
+        CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask; // Keep compiler happy for async signature
+
+        var result = PremierStaysProvider.GetHotelById(hotelId);
+        if (result != null) return TypedResults.Ok(result);
+
+        result = BudgetNestsProvider.GetHotelById(hotelId);
+        if (result != null) return TypedResults.Ok(result);
+
+        result = BoutiqueCollectionProvider.GetHotelById(hotelId);
+        if (result != null) return TypedResults.Ok(result);
+
+        return TypedResults.NotFound();
     }
 }

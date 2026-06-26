@@ -72,7 +72,14 @@ public sealed class BookingService : IBookingService
             CancellationPolicy = hotelResult.CancellationPolicy,
             TotalPrice = CalculateTotalPrice(hotelResult.NightlyRate, request.CheckInDate, request.CheckOutDate),
             Status = "Confirmed",
-            CreatedAt = DateTimeOffset.UtcNow
+            CreatedAt = DateTimeOffset.UtcNow,
+            CheckInDate = request.CheckInDate,
+            CheckOutDate = request.CheckOutDate,
+            HotelId = request.HotelId,
+            HotelName = hotelResult.HotelName,
+            Adults = request.Adults,
+            Rooms = 1,
+            Currency = GetCurrency(hotelResult.Country)
         };
 
         await bookingRepository.AddAsync(booking, cancellationToken);
@@ -169,7 +176,19 @@ public sealed class BookingService : IBookingService
 
     private static string GetProviderCode(string providerName)
     {
-        return providerName.Equals("PremierStays", StringComparison.OrdinalIgnoreCase) ? "PS" : "BN";
+        if (string.IsNullOrWhiteSpace(providerName)) return "XX";
+        var initials = new string(providerName.Where(char.IsUpper).ToArray());
+        return initials.Length >= 2 ? initials[..2] : providerName[..Math.Min(2, providerName.Length)].ToUpperInvariant();
+    }
+
+    private static string GetCurrency(string country)
+    {
+        var c = country?.ToLowerInvariant() ?? "";
+        if (c.Contains("united kingdom") || c.Contains("uk") || c.Contains("london")) return "GBP";
+        if (c.Contains("india")) return "INR";
+        if (c.Contains("france") || c.Contains("spain")) return "EUR";
+        if (c.Contains("uae")) return "AED";
+        return "USD";
     }
 
     private static BookingResponse MapToResponse(Booking booking)
@@ -186,7 +205,14 @@ public sealed class BookingService : IBookingService
             CancellationPolicy = booking.CancellationPolicy,
             Status = booking.Status,
             TotalPrice = booking.TotalPrice,
-            CreatedAt = booking.CreatedAt
+            CreatedAt = booking.CreatedAt,
+            CheckInDate = booking.CheckInDate,
+            CheckOutDate = booking.CheckOutDate,
+            HotelId = booking.HotelId,
+            HotelName = booking.HotelName,
+            Adults = booking.Adults,
+            Rooms = booking.Rooms,
+            Currency = booking.Currency
         };
     }
 }

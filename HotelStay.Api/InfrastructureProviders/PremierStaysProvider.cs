@@ -147,4 +147,12 @@ public sealed class PremierStaysProvider : IHotelProvider
             AvailableRooms = listing.AvailableRooms
         };
     }
+
+    public static HotelResult? GetHotelById(Guid hotelId)
+    {
+        var listing = Listings.FirstOrDefault(l => l.HotelId == hotelId);
+        if (listing == null) return null;
+        var provider = new PremierStaysProvider();
+        return provider.Map(listing);
+    }
 }

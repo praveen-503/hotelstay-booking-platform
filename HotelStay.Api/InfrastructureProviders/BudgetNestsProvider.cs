@@ -134,4 +134,12 @@ public sealed class BudgetNestsProvider : IHotelProvider
             AvailableRooms = listing.available_rooms
         };
     }
+
+    public static HotelResult? GetHotelById(Guid hotelId)
+    {
+        var listing = Listings.FirstOrDefault(l => l.hotel_id == hotelId);
+        if (listing == null) return null;
+        var provider = new BudgetNestsProvider();
+        return provider.Map(listing);
+    }
 }

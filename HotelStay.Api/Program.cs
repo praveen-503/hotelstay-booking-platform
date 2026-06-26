@@ -24,6 +24,35 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseExceptionHandler(handlerApp =>
+{
+    handlerApp.Run(async context =>
+    {
+        var exceptionFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
+        var exception = exceptionFeature?.Error;
+
+        context.Response.ContentType = "application/json";
+
+        if (exception is FluentValidation.ValidationException validationEx)
+        {
+            context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            var errors = validationEx.Errors.GroupBy(e => e.PropertyName)
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+            await context.Response.WriteAsJsonAsync(new { message = "Validation failed", errors });
+        }
+        else if (exception is InvalidOperationException or ArgumentException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(new { message = exception.Message });
+        }
+        else
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsJsonAsync(new { message = "An unexpected error occurred." });
+        }
+    });
+});
+
 app.UseCors();
 
 app.UseSwagger();

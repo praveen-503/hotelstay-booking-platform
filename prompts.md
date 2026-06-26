@@ -156,3 +156,19 @@ This file records the series of structured prompts and instructions used during 
 > - Form control error states showing in `<mat-error>`.
 > - Hotel card component rendering correct provider badges and cancellation policy chips.
 > - Routing parameter bindings on the confirmation and results pages.
+
+---
+
+## Phase 8: Solution Architecture Audit & candidate Refinements
+
+### Prompt 8.1: Architecture Clean-up and Bug Resolution
+> **Prompt:**
+> Refactor the project to fix all logic bugs, SOLID violations, and architecture gaps identified in the Senior Architect audit:
+> 1. Make the aggregator filtering generic (`result.IsAvailable` filter instead of matching `"BudgetNests"` provider name) to align with OCP.
+> 2. Add convention-based provider code initials mapping inside `BookingService` to dynamically generate references like `HSB-BC-...` for BoutiqueCollection.
+> 3. Expand the `Booking` database model to store dates of stay, hotel name, hotel ID, guest count, and currency, fixing state loss on confirmation page reloads.
+> 4. Implement the `GET /hotels/{hotelId}` backend route to enable seamless booking page reloads.
+> 5. Configure global exception handling middleware in the API pipeline to map validation and operation errors to structured 422/400 responses.
+> 6. Secure document validation boundaries by verifying destination cities against allowed domestic/international city lists.
+> 7. Clean up dead code by removing unused database tables (`Hotels`, `Rooms`, `Guests`) and their configuration/seeding logic.
+> 8. Replace the search destination text input with a strict dropdown menu on the frontend and add custom CSS classes for the BoutiqueCollection themed UI cards.

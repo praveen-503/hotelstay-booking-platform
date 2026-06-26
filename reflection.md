@@ -10,7 +10,7 @@ The solution includes:
 
 * ASP.NET Core 10 Minimal API backend
 * Angular 20 frontend
-* PostgreSQL persistence
+* EF Core In-Memory Database persistence
 * Provider-based architecture
 * Automated testing
 * Railway deployment for backend
@@ -216,12 +216,11 @@ This prevents invalid bookings regardless of client implementation.
 
 # Database Design
 
-PostgreSQL was selected because:
+Entity Framework Core In-Memory Database was selected because:
 
-* Strong EF Core support
-* Production-ready
-* Railway integration
-* Open-source
+* Zero-configuration setup for validation and testing
+* Fast runtime startup times
+* Dynamic schema creation with `Database.EnsureCreatedAsync()`
 
 The Booking entity stores:
 
@@ -230,8 +229,11 @@ The Booking entity stores:
 * Provider information
 * Pricing details
 * Booking status
+* Stay dates (Check-in and Check-out dates)
+* Hotel details (Hotel ID, Hotel Name, and Currency)
+* Guest and Room counts
 
-Entity Framework Core Code First was used to simplify schema evolution.
+Entity Framework Core was used to simplify entity mapping and query execution.
 
 ---
 
@@ -332,15 +334,13 @@ Architectural decisions, implementation choices, and final verification remained
 
 # Challenges Encountered
 
-## PostgreSQL Connectivity
+## PostgreSQL to In-Memory Transition
 
-During development, local PostgreSQL connectivity issues were encountered due to service configuration and environment setup.
+Initially, PostgreSQL connectivity configuration was planned, but environmental service differences across execution runs created configuration issues.
 
 Resolution:
 
-* Verified PostgreSQL service availability
-* Updated connection strings
-* Added environment-based configuration
+* Configured EF Core In-Memory Database as the primary persistence layer to ensure a seamless, zero-dependency local and deployment runtime experience.
 
 ---
 

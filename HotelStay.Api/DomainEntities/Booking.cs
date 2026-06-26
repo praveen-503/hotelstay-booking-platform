@@ -25,4 +25,18 @@ public sealed class Booking
     public required string Status { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+
+    public DateOnly CheckInDate { get; set; }
+
+    public DateOnly CheckOutDate { get; set; }
+
+    public Guid HotelId { get; set; }
+
+    public required string HotelName { get; set; }
+
+    public int Adults { get; set; }
+
+    public int Rooms { get; set; }
+
+    public required string Currency { get; set; }
 }

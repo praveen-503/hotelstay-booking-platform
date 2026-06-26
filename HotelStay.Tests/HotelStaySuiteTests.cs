@@ -67,9 +67,9 @@ public class HotelStaySuiteTests
         normalizedResult.TotalPrice.Should().Be(450m); // 150m * 3 nights
     }
 
-    // Test Case 2: BudgetNests unavailable room filtering
+    // Test Case 2: Universal unavailable room filtering
     [Fact]
-    public async Task SearchAsync_ShouldFilterOutUnavailableBudgetNestsRoomsAndRetainOthers()
+    public async Task SearchAsync_ShouldFilterOutUnavailableRoomsFromAllProviders()
     {
         // Arrange
         var logger = Substitute.For<ILogger<HotelSearchService>>();
@@ -103,10 +103,10 @@ public class HotelStaySuiteTests
         var results = await searchService.SearchAsync(searchRequest);
 
         // Assert
-        results.Should().HaveCount(2);
+        results.Should().HaveCount(1);
         results.Should().Contain(r => r.HotelName == "Budget Available");
-        results.Should().Contain(r => r.HotelName == "Other Unavailable");
         results.Should().NotContain(r => r.HotelName == "Budget Unavailable");
+        results.Should().NotContain(r => r.HotelName == "Other Unavailable");
     }
 
     // Test Case 3: Search validation
@@ -279,7 +279,9 @@ public class HotelStaySuiteTests
             CancellationPolicy = "Free cancellation",
             TotalPrice = 240m,
             Status = "Confirmed",
-            CreatedAt = DateTimeOffset.UtcNow
+            CreatedAt = DateTimeOffset.UtcNow,
+            HotelName = "PremierStays Royal London",
+            Currency = "GBP"
         };
 
         var bookingRepository = Substitute.For<IBookingRepository>();

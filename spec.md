@@ -295,7 +295,7 @@ Technology Stack:
 
 * ASP.NET Core 10 Minimal API
 * Entity Framework Core
-* PostgreSQL
+* EF Core In-Memory Database
 * FluentValidation
 * Swagger
 
@@ -346,6 +346,13 @@ Features:
 | TotalPrice         | Final Price             |
 | Status             | Booking Status          |
 | CreatedAt          | Booking Timestamp       |
+| CheckInDate        | Check-In Date           |
+| CheckOutDate       | Check-Out Date          |
+| HotelId            | Hotel Identifier        |
+| HotelName          | Hotel Name              |
+| Adults             | Number of Adults        |
+| Rooms              | Number of Rooms         |
+| Currency           | Booking Currency        |
 
 ---
 
@@ -405,7 +412,7 @@ Frontend:
 
 Database:
 
-* PostgreSQL
+* EF Core In-Memory Database
 
 ---
 

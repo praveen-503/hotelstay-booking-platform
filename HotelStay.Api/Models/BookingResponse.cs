@@ -23,4 +23,18 @@ public sealed record BookingResponse
     public decimal TotalPrice { get; init; }
 
     public DateTimeOffset CreatedAt { get; init; }
+
+    public DateOnly CheckInDate { get; init; }
+
+    public DateOnly CheckOutDate { get; init; }
+
+    public Guid HotelId { get; init; }
+
+    public required string HotelName { get; init; }
+
+    public int Adults { get; init; }
+
+    public int Rooms { get; init; }
+
+    public required string Currency { get; init; }
 }

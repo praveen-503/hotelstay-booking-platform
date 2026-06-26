@@ -17,7 +17,7 @@ graph TD
     Aggregator -->|Parallel Tasks| P1[PremierStays Provider]
     Aggregator -->|Parallel Tasks| P2[BudgetNests Provider]
     Aggregator -->|Parallel Tasks| P3[BoutiqueCollection Provider]
-    API -->|Write Booking| DB[(PostgreSQL Database)]
+    API -->|Write Booking| DB[(In-Memory Database)]
 ```
 
 ### 2. Design Patterns Applied
@@ -58,7 +58,7 @@ graph TD
 ### Backend (`HotelStay.Api`)
 * **Core**: .NET 10.0 Minimal APIs, C# 13
 * **Validation**: FluentValidation
-* **Persistence**: Entity Framework Core & PostgreSQL
+* **Persistence**: Entity Framework Core & In-Memory Database
 * **Documentation**: Swagger UI / OpenAPI
 
 ### Frontend (`hotelstay-ui`)
